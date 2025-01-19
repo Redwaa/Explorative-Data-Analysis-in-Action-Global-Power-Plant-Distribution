@@ -1,0 +1,1771 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Exploratory Data Analysis in Action - EDA: Energy production &#8212; Explorative Data Analysis in Action: Global Power Plant Distribution</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/09-01a-EDA_Energetic_production';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Exploratory Data Analysis in Action - EDA: Powerplants" href="09-01b-EDA_Powerplants.html" />
+    <link rel="prev" title="Explorative Data Analysis in Action: Global Power Plant Distribution" href="../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/energy_logo.png" class="logo__image only-light" alt="Explorative Data Analysis in Action: Global Power Plant Distribution - Home"/>
+    <img src="../_static/energy_logo.png" class="logo__image only-dark pst-js-only" alt="Explorative Data Analysis in Action: Global Power Plant Distribution - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Explorative Data Analysis in Action: Global Power Plant Distribution
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Exploratory Data Analysis in Action - EDA: Energy production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-01b-EDA_Powerplants.html">Exploratory Data Analysis in Action - EDA: Powerplants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-01c-EDA_Renewable_energies.html">Exploratory Data Analysis in Action - EDA: Renewable Energies</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/09-01a-EDA_Energetic_production.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/09-01a-EDA_Energetic_production.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Exploratory Data Analysis in Action - EDA: Energy production</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="exploratory-data-analysis-in-action-eda-energy-production">
+<h1>Exploratory Data Analysis in Action - EDA: Energy production<a class="headerlink" href="#exploratory-data-analysis-in-action-eda-energy-production" title="Link to this heading">#</a></h1>
+<p>Energetic production questions:</p>
+<ul class="simple">
+<li><p>Q1: How much energy was estimated to be produced in 2020 on each continent?</p></li>
+<li><p>Q2: Looking at each continent: which country produces the most energy on their continent?</p></li>
+<li><p>Q3: Which type of ressource is most used for energy production?</p></li>
+<li><p>Q4: Compare the distribution of ressources used for energy production across the Top 3 Continents</p></li>
+<li><p>Q5: Which is the most prominent primary fuel source for each respective continent?</p></li>
+<li><p>Q6: <em>Come up with your own question</em></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../src/&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">helper</span> <span class="kn">import</span> <span class="n">cuteplot</span>
+<span class="kn">from</span> <span class="nn">helper</span> <span class="kn">import</span> <span class="n">minmax_scaler</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">22</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">gdf_world</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span> <span class="s2">&quot;../data/gdf_world.p&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span> <span class="p">))</span>
+<span class="n">gdf_europe</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span> <span class="s2">&quot;../data/gdf_europe.p&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span> <span class="p">))</span>
+<span class="n">gdf_germany</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span> <span class="s2">&quot;../data/gdf_germany.p&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span> <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_world</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country code</th>
+      <th>country</th>
+      <th>name of powerplant</th>
+      <th>capacity in MW</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>primary_fuel</th>
+      <th>start date</th>
+      <th>owner of plant</th>
+      <th>geolocation_source</th>
+      <th>estimated_generation_gwh_2020</th>
+      <th>green</th>
+      <th>continent</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AFG</td>
+      <td>Afghanistan</td>
+      <td>Kajaki Hydroelectric Power Plant Afghanistan</td>
+      <td>33.0</td>
+      <td>32.3220</td>
+      <td>65.1190</td>
+      <td>Hydro</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>119.50</td>
+      <td>True</td>
+      <td>Asia</td>
+      <td>POINT (65.11900 32.32200)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AFG</td>
+      <td>Afghanistan</td>
+      <td>Kandahar DOG</td>
+      <td>10.0</td>
+      <td>31.6700</td>
+      <td>65.7950</td>
+      <td>Solar</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>Wiki-Solar</td>
+      <td>18.29</td>
+      <td>True</td>
+      <td>Asia</td>
+      <td>POINT (65.79500 31.67000)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AFG</td>
+      <td>Afghanistan</td>
+      <td>Kandahar JOL</td>
+      <td>10.0</td>
+      <td>31.6230</td>
+      <td>65.7920</td>
+      <td>Solar</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>Wiki-Solar</td>
+      <td>18.72</td>
+      <td>True</td>
+      <td>Asia</td>
+      <td>POINT (65.79200 31.62300)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AFG</td>
+      <td>Afghanistan</td>
+      <td>Mahipar Hydroelectric Power Plant Afghanistan</td>
+      <td>66.0</td>
+      <td>34.5560</td>
+      <td>69.4787</td>
+      <td>Hydro</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>174.91</td>
+      <td>True</td>
+      <td>Asia</td>
+      <td>POINT (69.47870 34.55600)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AFG</td>
+      <td>Afghanistan</td>
+      <td>Naghlu Dam Hydroelectric Power Plant Afghanistan</td>
+      <td>100.0</td>
+      <td>34.6410</td>
+      <td>69.7170</td>
+      <td>Hydro</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>350.80</td>
+      <td>True</td>
+      <td>Asia</td>
+      <td>POINT (69.71700 34.64100)</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>33654</th>
+      <td>ZMB</td>
+      <td>Zambia</td>
+      <td>Ndola</td>
+      <td>50.0</td>
+      <td>-12.9667</td>
+      <td>28.6333</td>
+      <td>Oil</td>
+      <td>-1</td>
+      <td>ZESCO</td>
+      <td>Power Africa</td>
+      <td>183.79</td>
+      <td>False</td>
+      <td>Africa</td>
+      <td>POINT (28.63330 -12.96670)</td>
+    </tr>
+    <tr>
+      <th>33655</th>
+      <td>ZMB</td>
+      <td>Zambia</td>
+      <td>Nkana</td>
+      <td>20.0</td>
+      <td>-12.8167</td>
+      <td>28.2000</td>
+      <td>Oil</td>
+      <td>-1</td>
+      <td>ZESCO</td>
+      <td>Power Africa</td>
+      <td>73.51</td>
+      <td>False</td>
+      <td>Africa</td>
+      <td>POINT (28.20000 -12.81670)</td>
+    </tr>
+    <tr>
+      <th>33656</th>
+      <td>ZMB</td>
+      <td>Zambia</td>
+      <td>Victoria Falls</td>
+      <td>108.0</td>
+      <td>-17.9167</td>
+      <td>25.8500</td>
+      <td>Hydro</td>
+      <td>-1</td>
+      <td>ZESCO</td>
+      <td>Power Africa</td>
+      <td>578.32</td>
+      <td>True</td>
+      <td>Africa</td>
+      <td>POINT (25.85000 -17.91670)</td>
+    </tr>
+    <tr>
+      <th>33657</th>
+      <td>ZWE</td>
+      <td>Zimbabwe</td>
+      <td>Hwange Coal Power Plant Zimbabwe</td>
+      <td>920.0</td>
+      <td>-18.3835</td>
+      <td>26.4700</td>
+      <td>Coal</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>2785.10</td>
+      <td>False</td>
+      <td>Africa</td>
+      <td>POINT (26.47000 -18.38350)</td>
+    </tr>
+    <tr>
+      <th>33658</th>
+      <td>ZWE</td>
+      <td>Zimbabwe</td>
+      <td>Kariba Dam South Hydroelectric Power Station Z...</td>
+      <td>750.0</td>
+      <td>-16.5222</td>
+      <td>28.7619</td>
+      <td>Hydro</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>3960.24</td>
+      <td>True</td>
+      <td>Africa</td>
+      <td>POINT (28.76190 -16.52220)</td>
+    </tr>
+  </tbody>
+</table>
+<p>33659 rows × 14 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_world</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;country code&#39;, &#39;country&#39;, &#39;name of powerplant&#39;, &#39;capacity in MW&#39;,
+       &#39;latitude&#39;, &#39;longitude&#39;, &#39;primary_fuel&#39;, &#39;start date&#39;, &#39;owner of plant&#39;,
+       &#39;geolocation_source&#39;, &#39;estimated_generation_gwh_2020&#39;, &#39;green&#39;,
+       &#39;continent&#39;, &#39;geometry&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_germany</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country code</th>
+      <th>country</th>
+      <th>name of powerplant</th>
+      <th>capacity in MW</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>primary_fuel</th>
+      <th>start date</th>
+      <th>owner of plant</th>
+      <th>geolocation_source</th>
+      <th>estimated_generation_gwh_2020</th>
+      <th>green</th>
+      <th>continent</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12009</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>ADS-Anlage</td>
+      <td>96.5</td>
+      <td>50.0918</td>
+      <td>8.5311</td>
+      <td>Gas</td>
+      <td>2012</td>
+      <td>Infraserv GmbH &amp; Co. Höchst KG</td>
+      <td>Open Power System Data</td>
+      <td>373.97</td>
+      <td>False</td>
+      <td>Europe</td>
+      <td>POINT (8.53110 50.09180)</td>
+    </tr>
+    <tr>
+      <th>12010</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>AHKW Neunkirchen</td>
+      <td>11.6</td>
+      <td>49.3386</td>
+      <td>7.1700</td>
+      <td>Waste</td>
+      <td>1999</td>
+      <td>EEW Energy from Waste Saarbrücken GmbH</td>
+      <td>Open Power System Data</td>
+      <td>24.40</td>
+      <td>False</td>
+      <td>Europe</td>
+      <td>POINT (7.17000 49.33860)</td>
+    </tr>
+    <tr>
+      <th>12011</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>AMK - Abfallentsorgungsgesellschaft des Märkis...</td>
+      <td>12.6</td>
+      <td>51.3971</td>
+      <td>7.6967</td>
+      <td>Waste</td>
+      <td>1981</td>
+      <td>AMK - Abfallentsorgungsgesellschaft des Märkis...</td>
+      <td>Open Power System Data</td>
+      <td>26.51</td>
+      <td>False</td>
+      <td>Europe</td>
+      <td>POINT (7.69670 51.39710)</td>
+    </tr>
+    <tr>
+      <th>12012</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>AVA GmbH</td>
+      <td>10.0</td>
+      <td>48.4011</td>
+      <td>10.9356</td>
+      <td>Waste</td>
+      <td>1993</td>
+      <td>AVA Abfallverwertung Augsburg GmbH</td>
+      <td>Open Power System Data</td>
+      <td>21.04</td>
+      <td>False</td>
+      <td>Europe</td>
+      <td>POINT (10.93560 48.40110)</td>
+    </tr>
+    <tr>
+      <th>12013</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>AVA Velsen</td>
+      <td>15.8</td>
+      <td>49.2139</td>
+      <td>6.8345</td>
+      <td>Waste</td>
+      <td>1997</td>
+      <td>AVA Velsen GmbH</td>
+      <td>Open Power System Data</td>
+      <td>33.24</td>
+      <td>False</td>
+      <td>Europe</td>
+      <td>POINT (6.83450 49.21390)</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>13296</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>Zolling power station</td>
+      <td>528.0</td>
+      <td>48.4554</td>
+      <td>11.7995</td>
+      <td>Biomass</td>
+      <td>1986</td>
+      <td>GDF SUEZ Energie Deutschland AG</td>
+      <td>Open Power System Data</td>
+      <td>NaN</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (11.79950 48.45540)</td>
+    </tr>
+    <tr>
+      <th>13297</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>Zscherndorf</td>
+      <td>8.5</td>
+      <td>51.6117</td>
+      <td>12.2819</td>
+      <td>Solar</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>Wiki-Solar</td>
+      <td>12.44</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (12.28190 51.61170)</td>
+    </tr>
+    <tr>
+      <th>13298</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>Zultenberg</td>
+      <td>5.0</td>
+      <td>50.0486</td>
+      <td>11.3146</td>
+      <td>Solar</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>Wiki-Solar</td>
+      <td>7.06</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (11.31460 50.04860)</td>
+    </tr>
+    <tr>
+      <th>13299</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>Zweimen Solar Power Plant</td>
+      <td>4.0</td>
+      <td>51.3520</td>
+      <td>12.1334</td>
+      <td>Solar</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>Industry About</td>
+      <td>5.83</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (12.13340 51.35200)</td>
+    </tr>
+    <tr>
+      <th>13300</th>
+      <td>DEU</td>
+      <td>Germany</td>
+      <td>Zwochau Solar Power Plant</td>
+      <td>3.8</td>
+      <td>51.4611</td>
+      <td>12.2528</td>
+      <td>Solar</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>Industry About</td>
+      <td>5.53</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (12.25280 51.46110)</td>
+    </tr>
+  </tbody>
+</table>
+<p>1292 rows × 14 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_germany</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;country code&#39;, &#39;country&#39;, &#39;name of powerplant&#39;, &#39;capacity in MW&#39;,
+       &#39;latitude&#39;, &#39;longitude&#39;, &#39;primary_fuel&#39;, &#39;start date&#39;, &#39;owner of plant&#39;,
+       &#39;geolocation_source&#39;, &#39;estimated_generation_gwh_2020&#39;, &#39;green&#39;,
+       &#39;continent&#39;, &#39;geometry&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_europe</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country code</th>
+      <th>country</th>
+      <th>name of powerplant</th>
+      <th>capacity in MW</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>primary_fuel</th>
+      <th>start date</th>
+      <th>owner of plant</th>
+      <th>geolocation_source</th>
+      <th>estimated_generation_gwh_2020</th>
+      <th>green</th>
+      <th>continent</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>ALB</td>
+      <td>Albania</td>
+      <td>Bistrica 1</td>
+      <td>27.0</td>
+      <td>39.9116</td>
+      <td>20.1047</td>
+      <td>Hydro</td>
+      <td>1965</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>88.45</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (20.10470 39.91160)</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ALB</td>
+      <td>Albania</td>
+      <td>Fierza</td>
+      <td>500.0</td>
+      <td>42.2514</td>
+      <td>20.0431</td>
+      <td>Hydro</td>
+      <td>1978</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>1648.24</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (20.04310 42.25140)</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ALB</td>
+      <td>Albania</td>
+      <td>Koman</td>
+      <td>600.0</td>
+      <td>42.1033</td>
+      <td>19.8224</td>
+      <td>Hydro</td>
+      <td>1985</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>1982.72</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (19.82240 42.10330)</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ALB</td>
+      <td>Albania</td>
+      <td>Lanabregas</td>
+      <td>5.0</td>
+      <td>41.3428</td>
+      <td>19.8964</td>
+      <td>Hydro</td>
+      <td>1951</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>15.23</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (19.89640 41.34280)</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>ALB</td>
+      <td>Albania</td>
+      <td>Shkopet</td>
+      <td>24.0</td>
+      <td>41.6796</td>
+      <td>19.8305</td>
+      <td>Hydro</td>
+      <td>1963</td>
+      <td>NaN</td>
+      <td>GEODB</td>
+      <td>83.57</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (19.83050 41.67960)</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>23592</th>
+      <td>GBR</td>
+      <td>United Kingdom</td>
+      <td>Yelvertoft</td>
+      <td>16.4</td>
+      <td>52.3748</td>
+      <td>-1.1511</td>
+      <td>Wind</td>
+      <td>-1</td>
+      <td>Greencoat UK Wind</td>
+      <td>UK Renewable Energy Planning Database</td>
+      <td>41.34</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (-1.15110 52.37480)</td>
+    </tr>
+    <tr>
+      <th>23593</th>
+      <td>GBR</td>
+      <td>United Kingdom</td>
+      <td>Yerbeston Gate Farm</td>
+      <td>6.1</td>
+      <td>51.7473</td>
+      <td>-4.7945</td>
+      <td>Solar</td>
+      <td>-1</td>
+      <td>Sunsave 23 Limited/ Vogt solar</td>
+      <td>UK Renewable Energy Planning Database</td>
+      <td>9.36</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (-4.79450 51.74730)</td>
+    </tr>
+    <tr>
+      <th>23594</th>
+      <td>GBR</td>
+      <td>United Kingdom</td>
+      <td>Yonderton Wind Cluster</td>
+      <td>4.6</td>
+      <td>57.5870</td>
+      <td>-2.4166</td>
+      <td>Wind</td>
+      <td>-1</td>
+      <td>Wilson Strachan</td>
+      <td>UK Renewable Energy Planning Database</td>
+      <td>11.59</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (-2.41660 57.58700)</td>
+    </tr>
+    <tr>
+      <th>23595</th>
+      <td>GBR</td>
+      <td>United Kingdom</td>
+      <td>Yorkley Solar Park</td>
+      <td>5.0</td>
+      <td>51.7459</td>
+      <td>-2.5356</td>
+      <td>Solar</td>
+      <td>-1</td>
+      <td>Bee Green Solar</td>
+      <td>UK Renewable Energy Planning Database</td>
+      <td>7.61</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (-2.53560 51.74590)</td>
+    </tr>
+    <tr>
+      <th>23596</th>
+      <td>GBR</td>
+      <td>United Kingdom</td>
+      <td>Ystgellog Farm Wind Farm</td>
+      <td>4.6</td>
+      <td>53.3938</td>
+      <td>-4.4003</td>
+      <td>Wind</td>
+      <td>-1</td>
+      <td>Airvolution Energy</td>
+      <td>UK Renewable Energy Planning Database</td>
+      <td>11.59</td>
+      <td>True</td>
+      <td>Europe</td>
+      <td>POINT (-4.40030 53.39380)</td>
+    </tr>
+  </tbody>
+</table>
+<p>9969 rows × 14 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_europe</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;country code&#39;, &#39;country&#39;, &#39;name of powerplant&#39;, &#39;capacity in MW&#39;,
+       &#39;latitude&#39;, &#39;longitude&#39;, &#39;primary_fuel&#39;, &#39;start date&#39;, &#39;owner of plant&#39;,
+       &#39;geolocation_source&#39;, &#39;estimated_generation_gwh_2020&#39;, &#39;green&#39;,
+       &#39;continent&#39;, &#39;geometry&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Q1: How much energy was estimated to be produced in 2020 on each continent?</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Energy_per_continent</span><span class="o">=</span><span class="n">gdf_world</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;continent&quot;</span><span class="p">)</span>
+<span class="n">Energy_per_continent_tab</span><span class="o">=</span><span class="n">Energy_per_continent</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;estimated_generation_gwh_2020&#39;</span><span class="p">:[</span><span class="s1">&#39;sum&#39;</span><span class="p">]})</span>
+<span class="n">Energy_per_continent_tab</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>estimated_generation_gwh_2020</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>sum</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>669620.52</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>10477684.28</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>3804578.55</td>
+    </tr>
+    <tr>
+      <th>North America</th>
+      <td>5523476.18</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>292229.64</td>
+    </tr>
+    <tr>
+      <th>South America</th>
+      <td>949267.73</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<blockquote>
+<div><p><strong>Q2: Looking at each continent: which country produces the most energy on their continent?</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">answer</span><span class="o">=</span><span class="n">Energy_per_continent_tab</span><span class="p">[</span><span class="n">Energy_per_continent_tab</span><span class="p">[</span><span class="s1">&#39;estimated_generation_gwh_2020&#39;</span><span class="p">,</span>
+<span class="s1">&#39;sum&#39;</span><span class="p">]</span><span class="o">==</span> <span class="p">(</span><span class="n">Energy_per_continent_tab</span><span class="p">[</span><span class="s1">&#39;estimated_generation_gwh_2020&#39;</span><span class="p">,</span>
+<span class="s1">&#39;sum&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          estimated_generation_gwh_2020
+                                    sum
+continent                              
+Asia                        10477684.28
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Q3: Which type of ressource is most used for energy production?</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_world</span><span class="p">[</span><span class="s2">&quot;primary_fuel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Hydro&#39;, &#39;Solar&#39;, &#39;Gas&#39;, &#39;Other&#39;, &#39;Oil&#39;, &#39;Nuclear&#39;, &#39;Coal&#39;, &#39;Wind&#39;,
+       &#39;Waste&#39;, &#39;Biomass&#39;, &#39;Wave and Tidal&#39;, &#39;Geothermal&#39;, &#39;Storage&#39;,
+       &#39;Cogeneration&#39;, &#39;Petcoke&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_world</span><span class="p">[</span><span class="s2">&quot;primary_fuel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>primary_fuel
+Solar             10461
+Hydro              7095
+Wind               4959
+Gas                3807
+Coal               2208
+Oil                2121
+Biomass            1394
+Waste              1051
+Geothermal          180
+Nuclear             159
+Storage             128
+Other                41
+Cogeneration         40
+Petcoke              11
+Wave and Tidal        4
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_germany</span><span class="p">[</span><span class="s2">&quot;primary_fuel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>primary_fuel
+Solar      734
+Gas        179
+Hydro      112
+Coal        95
+Waste       66
+Biomass     53
+Oil         23
+Wind        12
+Other       11
+Nuclear      7
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_europe</span><span class="p">[</span><span class="s2">&quot;primary_fuel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>primary_fuel
+Solar             3748
+Wind              2131
+Hydro             1983
+Gas                620
+Biomass            487
+Waste              432
+Coal               325
+Oil                 88
+Nuclear             64
+Geothermal          36
+Storage             28
+Other               19
+Cogeneration         6
+Wave and Tidal       2
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Q4: Compare the distribution of ressources used for energy production across the Top-3 Continents(*)</strong></p>
+</div></blockquote>
+<blockquote>
+<div><p><em>(*) Top-3 continents regarding the estimated energy production</em></p>
+</div></blockquote>
+<blockquote>
+<div><p>Hint: Consider using bar or pie plots (you may use something different though)</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Energy_per_continent_tab</span><span class="p">[</span><span class="s1">&#39;Summe&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">Energy_per_continent_tab</span><span class="p">[</span><span class="s1">&#39;estimated_generation_gwh_2020&#39;</span><span class="p">,</span>
+<span class="s1">&#39;sum&#39;</span><span class="p">]</span>
+<span class="n">Energy_per_continent_tab</span><span class="o">=</span><span class="n">Energy_per_continent_tab</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Summe&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">TOP3</span><span class="o">=</span><span class="n">Energy_per_continent_tab</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TOP3</span><span class="o">=</span><span class="n">TOP3</span><span class="p">[</span><span class="s1">&#39;estimated_generation_gwh_2020&#39;</span><span class="p">,</span><span class="s1">&#39;sum&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TOP3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>continent
+Asia             10477684.28
+North America     5523476.18
+Europe            3804578.55
+Name: (estimated_generation_gwh_2020, sum), dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">continents</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Asia&#39;</span><span class="p">,</span> <span class="s1">&#39;North America&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span>
+<span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">10477684.28</span><span class="p">,</span> <span class="mf">5523476.18</span><span class="p">,</span> <span class="mf">3804578.55</span><span class="p">]</span>  <span class="c1"># Prozentsätze für jede Kategorie</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;PuBu&quot;</span><span class="p">)</span>  <span class="c1"># Farben für die Segmente</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">continents</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;TOP 3 Continents in estimated GWH in 2020&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/780a9f512cc0b5a768b2514db383b88e95c85ff985fe92bb30c05ec1d3c6b14a.png" src="../_images/780a9f512cc0b5a768b2514db383b88e95c85ff985fe92bb30c05ec1d3c6b14a.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Q5: Which is the most prominent primary fuel source for each respective continent?</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_primary_continent</span><span class="o">=</span><span class="n">gdf_world</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;continent&#39;</span><span class="p">)</span>
+<span class="n">top_primary_continent_tab</span><span class="o">=</span><span class="n">top_primary_continent</span><span class="p">[</span><span class="s2">&quot;primary_fuel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">top_primary_continent_tab2</span><span class="o">=</span><span class="n">top_primary_continent_tab</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">top_primary_continent_tab2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>continent</th>
+      <th>Africa</th>
+      <th>Asia</th>
+      <th>Europe</th>
+      <th>North America</th>
+      <th>Oceania</th>
+      <th>South America</th>
+    </tr>
+    <tr>
+      <th>primary_fuel</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Biomass</th>
+      <td>10.0</td>
+      <td>61.0</td>
+      <td>489.0</td>
+      <td>332.0</td>
+      <td>27.0</td>
+      <td>475.0</td>
+    </tr>
+    <tr>
+      <th>Coal</th>
+      <td>27.0</td>
+      <td>1398.0</td>
+      <td>408.0</td>
+      <td>308.0</td>
+      <td>28.0</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>Cogeneration</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>6.0</td>
+      <td>34.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Gas</th>
+      <td>115.0</td>
+      <td>647.0</td>
+      <td>748.0</td>
+      <td>1936.0</td>
+      <td>126.0</td>
+      <td>235.0</td>
+    </tr>
+    <tr>
+      <th>Geothermal</th>
+      <td>7.0</td>
+      <td>45.0</td>
+      <td>39.0</td>
+      <td>82.0</td>
+      <td>7.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Hydro</th>
+      <td>160.0</td>
+      <td>1753.0</td>
+      <td>2026.0</td>
+      <td>2135.0</td>
+      <td>106.0</td>
+      <td>915.0</td>
+    </tr>
+    <tr>
+      <th>Nuclear</th>
+      <td>1.0</td>
+      <td>27.0</td>
+      <td>67.0</td>
+      <td>59.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>Oil</th>
+      <td>82.0</td>
+      <td>224.0</td>
+      <td>92.0</td>
+      <td>891.0</td>
+      <td>47.0</td>
+      <td>785.0</td>
+    </tr>
+    <tr>
+      <th>Other</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>18.0</td>
+      <td>NaN</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>Petcoke</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>11.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Solar</th>
+      <td>119.0</td>
+      <td>2853.0</td>
+      <td>3809.0</td>
+      <td>3476.0</td>
+      <td>69.0</td>
+      <td>135.0</td>
+    </tr>
+    <tr>
+      <th>Storage</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>28.0</td>
+      <td>100.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Waste</th>
+      <td>6.0</td>
+      <td>10.0</td>
+      <td>432.0</td>
+      <td>543.0</td>
+      <td>48.0</td>
+      <td>12.0</td>
+    </tr>
+    <tr>
+      <th>Wave and Tidal</th>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Wind</th>
+      <td>33.0</td>
+      <td>933.0</td>
+      <td>2134.0</td>
+      <td>1375.0</td>
+      <td>60.0</td>
+      <td>424.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_primary_continent</span><span class="o">=</span><span class="n">gdf_world</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;continent&#39;</span><span class="p">)</span>
+<span class="n">top_primary_continent_tab</span><span class="o">=</span><span class="n">top_primary_continent</span><span class="p">[</span><span class="s2">&quot;primary_fuel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">top_primary_continent_tab</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>continent
+Africa            160.0
+Asia             2853.0
+Europe           3809.0
+North America    3476.0
+Oceania           126.0
+South America     915.0
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_energy_source_per_continent</span> <span class="o">=</span> <span class="n">top_primary_continent_tab2</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">max_energy_source_per_continent</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>continent
+Africa           Hydro
+Asia             Solar
+Europe           Solar
+North America    Solar
+Oceania            Gas
+South America    Hydro
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Q6: <em>Come up with your own question</em></strong></p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Q6: Who owns the most Powerplants in Germany?</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Top3_Inhaber_DE</span><span class="o">=</span><span class="n">gdf_germany</span><span class="p">[</span><span class="s1">&#39;owner of plant&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">Top3_Inhaber_DE</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>owner of plant
+E.ON Kraftwerke GmbH                 32
+EnBW Energie Baden-Württemberg AG    17
+RWE Innogy GmbH                      13
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Explorative Data Analysis in Action: Global Power Plant Distribution</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="09-01b-EDA_Powerplants.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Exploratory Data Analysis in Action - EDA: Powerplants</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Redwan Albunni, Tonja Scheidler, Susanna Funck
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: notebooks/09-01a-EDA_Energetic_production
+- file: notebooks/09-01b-EDA_Powerplants
+- file: notebooks/09-01c-EDA_Renewable_energies
+
+
