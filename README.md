@@ -55,7 +55,7 @@ Das Ziel dieses Projekts ist es, datengetriebene Einblicke in die globale Energi
 
 ## Links
 
-- **GitHub Pages**: [Hier klicken, um das Buch online zu lesen](https://redwaa.github.io/Explorative-Data-Analysis-in-Action-Global-Power-Plant-Distribution/)
+- **GitHub Pages**: [Hier klicken, um das Buch online zu lesen](https://github.com/Redwaa/Explorative-Data-Analysis-in-Action-Global-Power-Plant-Distribution/)
 - **Diskussionen und Issues**: [Melden Sie Probleme oder diskutieren Sie](https://github.com/redwaa/Explorative-Data-Analysis-in-Action-Global-Power-Plant-Distribution/issues)
 
 ---
